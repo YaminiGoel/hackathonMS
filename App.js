@@ -7,7 +7,6 @@ function App() {
   const [managerID, setManagerID] = useState('');
   const [managerName, setManagerName] = useState('');
   const [teamName, setTeamName] = useState('');
-  const [numMembers, setNumMembers] = useState('');
   const [email, setEmail] = useState('');
   const [teamMembers, setTeamMembers] = useState(['']);
   const [formErrors, setFormErrors] = useState({});
@@ -41,9 +40,6 @@ function App() {
     if (email.trim() === '') {
       errors.email = 'Email is required';
     }
-    // if (numMembers.valueOf() == 0) {
-    //   errors.numMembers = 'At least one team member is required';
-    // }
     if (teamMembers.length === 0) {
       errors.teamMembers = 'At least one team member is required';
     }
