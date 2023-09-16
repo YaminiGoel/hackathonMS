@@ -25,7 +25,7 @@ function App() {
     newMembers.splice(index, 1);
     setTeamMembersDetails(newMembers);
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let errors = {};
     if (managerName.trim() === '') {
@@ -40,11 +40,41 @@ function App() {
     if (teamMembers.length === 0) {
       errors.teamMembers = 'At least one team member is required';
     }
+
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
-      console.log(`Manager Name: ${managerName}, Email: ${email}, Team Members: ${teamMembers.join(', ')}`);
-    }
+      const employeeId = 0;
+      const teamName = event.target.elements.teamName.value;
+      const isActive = true;
+      const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
+      const birthdayTemplate = '';
+      const isWorkAnniNotificationEnabled = event.target.elements.workAnniversary.checked;
+      const workAnniversaryTemplate = '';
+      const recepientEmailIds = [event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
+      console.log(isBirthdayNotificationEnabled);
+      console.log(recepientEmailIds);
+
+      // const response = await fetch('https://apidetails', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     employeeId,
+      //     teamName,
+      //     isActive,
+      //     isBirthdayNotificationEnabled,
+      //     birthdayTemplate,
+      //     isWorkAnniNotificationEnabled,
+      //     workAnniversaryTemplate,
+      //     recepientEmailIds,
+      //   }),
+      // });
+
+      // const data = await response.json();
+      // console.log(data);
+    };
   };
 
   return (
