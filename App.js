@@ -54,12 +54,12 @@ function App() {
       const managerID = event.target.elements.managerID.value;
       const managerName = event.target.elements.managerName.value;
       const teamName = event.target.elements.teamName.value;
-      const teamCount = event.target.elements.numMembers.value;
       const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
       const isWorkAnniNotificationEnabled = event.target.elements.workAnniversary.checked;
       const recepientEmailIds = event.target.elements.email.value//[event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
       const teamMemberDetailsArray = teamMembersDetails.map((member) => ({
         employeeId: member.id,
+        name: member.name,
         employeeEmail: member.email,
         dob: member.dob,
         doj: member.doj,
@@ -70,7 +70,6 @@ function App() {
         managerID,
         managerName,
             teamName,
-            teamCount,
             isBirthdayNotificationEnabled,
             isWorkAnniNotificationEnabled,
             recepientEmailIds,
@@ -138,7 +137,7 @@ function App() {
           {formErrors.teamName && <div className="form-error">{formErrors.teamName}</div>}
         </div>
 
-        <div class="form-row">
+        {/* <div class="form-row">
           <label htmlFor="name" className="form-label">No. of Members:</label>
           <input
             type="number"
@@ -150,7 +149,7 @@ function App() {
             className="form-input"
           />
           {formErrors.numMembers && <div className="form-error">{formErrors.numMembers}</div>}
-        </div>
+        </div> */}
 
         <div class="form-row">
           <label htmlFor="email" className="form-label">
@@ -225,6 +224,7 @@ function App() {
               <thead>
                 <tr>
                   <th>Employee ID</th>
+                  <th>Name</th>
                   <th>Email Address</th>
                   <th>DOB</th>
                   <th>Date of Joining</th>
@@ -238,6 +238,13 @@ function App() {
                         type="text"
                         value={member.id}
                         onChange={(event) => handleMemberChange(index, 'id', event.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={member.name}
+                        onChange={(event) => handleMemberChange(index, 'name', event.target.value)}
                       />
                     </td>
                     <td>
