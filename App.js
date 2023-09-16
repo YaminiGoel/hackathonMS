@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ReactMultiEmail } from 'react-multi-email';
 
 function App() {
+  const [managerID, setManagerID] = useState('');
   const [managerName, setManagerName] = useState('');
   const [teamName, setTeamName] = useState('');
   const [numMembers, setNumMembers] = useState('');
@@ -28,6 +29,9 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let errors = {};
+    if (managerID.trim() === '') {
+      errors.managerID = 'Manager ID is required';
+    }
     if (managerName.trim() === '') {
       errors.managerName = 'Manager name is required';
     }
@@ -37,6 +41,9 @@ function App() {
     if (email.trim() === '') {
       errors.email = 'Email is required';
     }
+    // if (numMembers.valueOf() == 0) {
+    //   errors.numMembers = 'At least one team member is required';
+    // }
     if (teamMembers.length === 0) {
       errors.teamMembers = 'At least one team member is required';
     }
@@ -44,32 +51,39 @@ function App() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
     } else {
-      const employeeId = 0;
+      const managerID = event.target.elements.managerID.value;
+      const managerName = event.target.elements.managerName.value;
       const teamName = event.target.elements.teamName.value;
-      const isActive = true;
+      const teamCount = event.target.elements.numMembers.value;
       const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
-      const birthdayTemplate = '';
       const isWorkAnniNotificationEnabled = event.target.elements.workAnniversary.checked;
-      const workAnniversaryTemplate = '';
-      const recepientEmailIds = [event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
-      console.log(isBirthdayNotificationEnabled);
-      console.log(recepientEmailIds);
+      const recepientEmailIds = event.target.elements.email.value//[event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
+      const teamMemberDetailsArray = teamMembersDetails.map((member) => ({
+        employeeId: member.id,
+        employeeEmail: member.email,
+        dob: member.dob,
+        doj: member.doj,
+        isActive: true,
+      }));
+
+      const body = JSON.stringify({
+        managerID,
+        managerName,
+            teamName,
+            teamCount,
+            isBirthdayNotificationEnabled,
+            isWorkAnniNotificationEnabled,
+            recepientEmailIds,
+            teamMemberDetailsArray
+          })
+      console.log(body);
 
       // const response = await fetch('https://apidetails', {
       //   method: 'POST',
       //   headers: {
       //     'Content-Type': 'application/json',
       //   },
-      //   body: JSON.stringify({
-      //     employeeId,
-      //     teamName,
-      //     isActive,
-      //     isBirthdayNotificationEnabled,
-      //     birthdayTemplate,
-      //     isWorkAnniNotificationEnabled,
-      //     workAnniversaryTemplate,
-      //     recepientEmailIds,
-      //   }),
+      //   body: body,
       // });
 
       // const data = await response.json();
@@ -86,6 +100,19 @@ function App() {
       </header>
       <br></br>
       <form onSubmit={handleSubmit}>
+      <div class="form-row">
+          <label htmlFor="managerName" className="form-label">Manager ID:</label>
+          <input
+            type="text"
+            id="managerID"
+            name="managerID"
+            value={managerID}
+            onChange={(event) => setManagerID(event.target.value)}
+            className="form-input"
+          />
+          {formErrors.managerID && <div className="form-error">{formErrors.managerID}</div>}
+        </div>
+
         <div class="form-row">
           <label htmlFor="managerName" className="form-label">Manager Name:</label>
           <input
@@ -122,7 +149,7 @@ function App() {
             onChange={(event) => setNumMembers(event.target.value)}
             className="form-input"
           />
-          {formErrors.managerName && <div className="form-error">{formErrors.managerName}</div>}
+          {formErrors.numMembers && <div className="form-error">{formErrors.numMembers}</div>}
         </div>
 
         <div class="form-row">
@@ -197,6 +224,7 @@ function App() {
             <table>
               <thead>
                 <tr>
+                  <th>Employee ID</th>
                   <th>Email Address</th>
                   <th>DOB</th>
                   <th>Date of Joining</th>
@@ -205,6 +233,13 @@ function App() {
               <tbody>
                 {teamMembersDetails.map((member, index) => (
                   <tr key={index}>
+                    <td>
+                      <input
+                        type="text"
+                        value={member.id}
+                        onChange={(event) => handleMemberChange(index, 'id', event.target.value)}
+                      />
+                    </td>
                     <td>
                       <input
                         type="email"
