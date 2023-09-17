@@ -46,8 +46,9 @@ function App() {
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-    } else {
-      const managerID = event.target.elements.managerID.value;
+    }
+
+    const managerID = event.target.elements.managerID.value;
       const managerName = event.target.elements.managerName.value;
       const teamName = event.target.elements.teamName.value;
       const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
@@ -65,12 +66,12 @@ function App() {
       const body = JSON.stringify({
         managerID,
         managerName,
-            teamName,
-            isBirthdayNotificationEnabled,
-            isWorkAnniNotificationEnabled,
-            recepientEmailIds,
-            teamMemberDetailsArray
-          })
+        teamName,
+        isBirthdayNotificationEnabled,
+        isWorkAnniNotificationEnabled,
+        recepientEmailIds,
+        teamMemberDetailsArray
+      })
       console.log(body);
 
       // const response = await fetch('https://apidetails', {
@@ -83,19 +84,19 @@ function App() {
 
       // const data = await response.json();
       // console.log(data);
-    };
+
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <p>
-          Register your team!
+          Let's celebrate the special days!
         </p>
       </header>
       <br></br>
       <form onSubmit={handleSubmit}>
-      <div class="form-row">
+        <div class="form-row">
           <label htmlFor="managerName" className="form-label">Manager ID:</label>
           <input
             type="text"

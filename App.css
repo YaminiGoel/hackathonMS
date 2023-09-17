@@ -81,6 +81,7 @@ input {
   font-size: 16px;
   cursor: pointer;
 }
+
 .form-row {
   margin-bottom: 10px;
 }
@@ -120,7 +121,7 @@ input {
 } */
 
 .form-checkbox-group {
-  display: flex;
+  display: inline-block;
   flex-direction: row;
   align-items: center;
 }
@@ -129,26 +130,20 @@ input {
 .form-checkbox-label {
   display: inline-block;
   align-items: center;
-  margin-right: 1rem;
+  margin-right: 55px;
+  white-space: nowrap;
 }
 
 .form-checkbox-input {
   margin-right: 0.5rem;
 }
 
-/* .form-checkbox-label {
-  display: inline-block;
-  margin-right: 24px;
-  font-size: 14px;
-  font-weight: normal;
+.form-checkbox-label {
   line-height: 1.5;
   color: #333;
   cursor: pointer;
+  align-items: center;
 }
-
-.form-checkbox-label:hover {
-  color: #2196F3;
-} */
 
 .form-error {
   color: red;
@@ -160,10 +155,25 @@ table {
   margin-left: auto;
   margin-right: auto;
 }
+
+.form-row button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-row button:hover {
+  background-color: #0056b3;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
