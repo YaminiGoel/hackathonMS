@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
 import { ReactMultiEmail } from 'react-multi-email';
@@ -27,63 +26,48 @@ function App() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let errors = {};
-    if (managerID.trim() === '') {
-      errors.managerID = 'Manager ID is required';
-    }
-    if (managerName.trim() === '') {
-      errors.managerName = 'Manager name is required';
-    }
-    if (teamName.trim() === '') {
-      errors.teamName = 'Team name is required';
-    }
-    if (email.trim() === '') {
-      errors.email = 'Email is required';
-    }
-    if (teamMembers.length === 0) {
-      errors.teamMembers = 'At least one team member is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-    }
-
     const managerID = event.target.elements.managerID.value;
-      const managerName = event.target.elements.managerName.value;
-      const teamName = event.target.elements.teamName.value;
-      const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
-      const isWorkAnniNotificationEnabled = event.target.elements.workAnniversary.checked;
-      const recepientEmailIds = event.target.elements.email.value//[event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
-      const teamMemberDetailsArray = teamMembersDetails.map((member) => ({
-        employeeId: member.id,
-        name: member.name,
-        employeeEmail: member.email,
-        dob: member.dob,
-        doj: member.doj,
-        isActive: true,
-      }));
+    const managerName = event.target.elements.managerName.value;
+    const teamName = event.target.elements.teamName.value;
+    const isBirthdayNotificationEnabled = event.target.elements.birthdays.checked;
+    const isWorkAnniNotificationEnabled = event.target.elements.workAnniversary.checked;
+    const recepientEmailIds = event.target.elements.email.value//[event.target.elements.email.value, ...teamMembersDetails.map((member) => member.email)];
+    const teamMemberDetailsArray = teamMembersDetails.map((member) => ({
+      employeeId: member.id,
+      name: member.name,
+      employeeEmail: member.email,
+      dob: member.dob,
+      doj: member.doj,
+      isActive: true,
+    }));
 
-      const body = JSON.stringify({
-        managerID,
-        managerName,
-        teamName,
-        isBirthdayNotificationEnabled,
-        isWorkAnniNotificationEnabled,
-        recepientEmailIds,
-        teamMemberDetailsArray
-      })
-      console.log(body);
+    const body = JSON.stringify({
+      managerID,
+      managerName,
+      teamName,
+      isBirthdayNotificationEnabled,
+      isWorkAnniNotificationEnabled,
+      recepientEmailIds,
+      teamMemberDetailsArray
+    })
+    console.log(body);
 
-      // const response = await fetch('https://apidetails', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: body,
-      // });
+    // const response = await fetch('https://apidetails', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: body,
+    // });
 
-      // const data = await response.json();
-      // console.log(data);
+    // const data = await response.json();
+    // console.log(data);
+
+    const successMessage = document.createElement('p');
+    successMessage.textContent = 'Registration successful!';
+    successMessage.classList.add('successMessage');
+
+    event.target.appendChild(successMessage);
 
   };
 
@@ -106,7 +90,6 @@ function App() {
             onChange={(event) => setManagerID(event.target.value)}
             className="form-input"
           />
-          {formErrors.managerID && <div className="form-error">{formErrors.managerID}</div>}
         </div>
 
         <div class="form-row">
@@ -119,7 +102,6 @@ function App() {
             onChange={(event) => setManagerName(event.target.value)}
             className="form-input"
           />
-          {formErrors.managerName && <div className="form-error">{formErrors.managerName}</div>}
         </div>
         <div class="form-row">
           <label htmlFor="teamName" className="form-label">Team Name:</label>
@@ -131,27 +113,11 @@ function App() {
             onChange={(event) => setTeamName(event.target.value)}
             className="form-input"
           />
-          {formErrors.teamName && <div className="form-error">{formErrors.teamName}</div>}
         </div>
-
-        {/* <div class="form-row">
-          <label htmlFor="name" className="form-label">No. of Members:</label>
-          <input
-            type="number"
-            id="numMembers"
-            min={0}
-            name="numMembers"
-            value={numMembers}
-            onChange={(event) => setNumMembers(event.target.value)}
-            className="form-input"
-          />
-          {formErrors.numMembers && <div className="form-error">{formErrors.numMembers}</div>}
-        </div> */}
 
         <div class="form-row">
           <label htmlFor="email" className="form-label">
             Audience Email:
-            {/* <span className="required">*</span>: */}
           </label>
           <input
             type="email"
@@ -162,7 +128,6 @@ function App() {
             className="form-input"
             required
           />
-          {formErrors.managerName && <div className="form-error">{formErrors.managerName}</div>}
         </div>
 
         {/* <div className="form-row">
@@ -188,7 +153,7 @@ function App() {
         </div> */}
 
         <div className="form-row">
-          <label htmlFor="specialDays" className="form-label">Special Days:</label>
+          <label htmlFor="specialDays" className="form-label">Choose occasion:</label>
           <div className="form-checkbox-group">
             <label htmlFor="workAnniversary" className="form-checkbox-label">
               <input
@@ -211,7 +176,6 @@ function App() {
               Birthdays
             </label>
           </div>
-          {formErrors.managerName && <div className="form-error">{formErrors.managerName}</div>}
         </div>
 
         <div class="form-row">
@@ -223,7 +187,7 @@ function App() {
                   <th>Employee ID</th>
                   <th>Name</th>
                   <th>Email Address</th>
-                  <th>DOB</th>
+                  <th>Date of Birth</th>
                   <th>Date of Joining</th>
                 </tr>
               </thead>
